@@ -60,23 +60,25 @@ public class AmortisationScheduleService {
 
         final var deposit = amortisationRequest.getDeposit();
 
+        final var amountToBePayed = assetPrice - deposit;
+
         double monthlyPayment;
 
         if (balloonPayment != 0) {
             log.info("Calculating Monthly payment with balloon payment for account ID {}", accountId);
             monthlyPayment = calculationService
-                    .calculateMonthlyRepayment(assetPrice, interestMonth, totalMonths, balloonPayment).doubleValue();
+                    .calculateMonthlyRepayment(amountToBePayed, interestMonth, totalMonths, balloonPayment).doubleValue();
         } else {
             log.info("Calculating Monthly payment for account ID {}", accountId);
             monthlyPayment = calculationService
-                    .calculateMonthlyRepayment(assetPrice, interestMonth, totalMonths).doubleValue();
+                    .calculateMonthlyRepayment(amountToBePayed, interestMonth, totalMonths).doubleValue();
         }
 
         try {
 
             log.info("Amortisation Schedule building for account ID {}", accountId);
 
-            Set<AmortisationSchedules> schedule = buildAmortisationSchedule(assetPrice,
+            Set<AmortisationSchedules> schedule = buildAmortisationSchedule(amountToBePayed,
                     interestMonth, totalMonths, monthlyPayment);
 
             List<AmortisationSchedules> responseList = new ArrayList<>();
