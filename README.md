@@ -10,3 +10,9 @@ mvn clean install
 ```
 
 Run as Spring Application
+
+
+
+
+https://github.com/LEvans96/LDMSExercise/assets/92258730/4d28672f-0314-4ddd-ae27-de9b83d0717f
+
